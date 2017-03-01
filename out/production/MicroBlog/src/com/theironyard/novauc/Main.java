@@ -22,12 +22,12 @@ public class Main {
                 "/",
                 ((request, response) -> {
                     HashMap m = new HashMap();
-                    if (user == null) {
-                        return new ModelAndView(m, "index.html");
-                    } else {
-                        m.put("name", user.name);
-                        return new ModelAndView(m, "index.html");
-                    }
+                    //if (user == null) {
+                      //  return new ModelAndView(m, "index.html");
+                    //} else {
+                     //   m.put("name", user.name);
+                       // return new ModelAndView(m, "index.html");
+                    //}
                 }),
                 new MustacheTemplateEngine()
         );
