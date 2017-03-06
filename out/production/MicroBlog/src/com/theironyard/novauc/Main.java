@@ -13,7 +13,6 @@ public class Main {
         static User user;
 
     public static void main(String[] args) {
-        // write your code here
 
         Spark.init();
 
@@ -22,18 +21,19 @@ public class Main {
                 "/",
                 ((request, response) -> {
                     HashMap m = new HashMap();
-                    //if (user == null) {
-                      //  return new ModelAndView(m, "index.html");
-                    //} else {
-                     //   m.put("name", user.name);
-                       // return new ModelAndView(m, "index.html");
-                    //}
+                    if (user == null) {
+                        return new ModelAndView(m, "index.html");
+                    } else {
+                        m.put("name", user.name);
+                        m.put("post",user.posts);
+                        return new ModelAndView(m, "messages.html");
+                    }
                 }),
                 new MustacheTemplateEngine()
         );
 
         Spark.post(
-                "/Submit",
+                "/login",
                 ((request, response) -> {
                     String name = request.queryParams("loginName");
                     user = new User(name);
@@ -41,6 +41,14 @@ public class Main {
                     return "";
                 })
         );
+        Spark.post("/Submit",
+                ((request, response) -> {
+                    String Message = request.queryParams("Message");
+                    user.posts.add(Message);
+                    response.redirect("/");
+                    return "";
+
+                }));
 
     }
 }
